@@ -1648,8 +1648,8 @@ GameObject:
   - component: {fileID: 4997712217432996970}
   - component: {fileID: 2590878342087853958}
   - component: {fileID: 1920128775494279072}
+  - component: {fileID: -2110202762407301066}
   - component: {fileID: 3752882139125301535}
-  - component: {fileID: 3872261804039682576}
   m_Layer: 0
   m_Name: Bruh
   m_TagString: Untagged
@@ -1729,6 +1729,22 @@ CapsuleCollider:
   m_Height: 2.4090047
   m_Direction: 1
   m_Center: {x: -0.0000043511345, y: 1.2013662, z: 0.022086322}
+--- !u!114 &-2110202762407301066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5170336764064239752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9a345fa6dd6d04b84df2f99bb6bc8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  Velocidade: 5
+  ParaDseguir: 3
+  tempo: 1.5
 --- !u!95 &3752882139125301535
 Animator:
   serializedVersion: 5
@@ -1750,28 +1766,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3872261804039682576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5170336764064239752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6c375b97bcbaed4b9ede3695bc7c82e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  estaVivo: 1
-  forcaPulo: 5
-  ouro: 0
-  vida: 0
-  velocidade: 10
-  temChave: 0
-  pegando: 0
-  podePegar: 0
-  inventario: []
 --- !u!1 &5277112033199526187
 GameObject:
   m_ObjectHideFlags: 0
