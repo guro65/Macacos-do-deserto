@@ -8,10 +8,13 @@ public class Npc : MonoBehaviour
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float paraDeSeguirDistancia = 3f;
     [SerializeField] private float tempoEntreAcoes = 1.5f;  // Tempo entre as ações de ataque/defesa
+    public float danoInimigo;
+    public int vida;
     private bool estaSeguindo;
     private bool estaAtacando;
     private Rigidbody rb;
     private Animator animator;
+    
 
     private void Start()
     {
@@ -109,6 +112,7 @@ public class Npc : MonoBehaviour
             estaAtacando = false;  // Para as ações de ataque/defesa
             estaSeguindo = true;   // Volta a seguir o player
             animator.SetBool("Andar", true); // Retorna à animação de andar
+
         }
     }
 }

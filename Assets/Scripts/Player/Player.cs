@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private bool estaVivo = true;
+    [SerializeField] private int vida;
+    [SerializeField] private float ataque;
+    [SerializeField] private float velocidade;
     [SerializeField] private int forcaPulo;
     [SerializeField] private int ouro;
-    [SerializeField] private int vida;
-    [SerializeField] private float velocidade;
     [SerializeField] private bool temChave;
     [SerializeField] private bool pegando;
     [SerializeField] private bool podePegar;
+    [SerializeField] private Animator animator;
+    [SerializeField] private bool estaVivo = true;
     [SerializeField] private List<GameObject> inventario = new List<GameObject>();
     private Rigidbody rb;
     private bool estaPulando;
@@ -63,6 +64,11 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("Andar", false);
             animator.SetBool("AndarParaTras", false);
+            //velocidade = 0;
+            /*if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+            {
+            velocidade = 10;
+            }*/
         }
 
         if(Input.GetKeyDown(KeyCode.Space) && !estaPulando)
@@ -74,6 +80,16 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("Ataque");
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            animator.SetTrigger("Ataque2");
+        }
+
+        if(Input.GetMouseButtonDown(0) && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            animator.SetTrigger("Ataque3");
         }
 
         if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
@@ -90,6 +106,11 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("EstaVivo");
             estaVivo = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            animator.SetTrigger("Defesa");
         }
 
         TurnAround();
@@ -133,6 +154,7 @@ public class Player : MonoBehaviour
             estaPulando = false;
             animator.SetBool("EstaNoChao", true);
         }
+    
     }
 
     private void OnTriggerEnter()
@@ -213,5 +235,6 @@ public class Player : MonoBehaviour
         }
         
     }
+    
     //desculpa
 }
