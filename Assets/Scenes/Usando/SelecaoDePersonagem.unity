@@ -551,7 +551,7 @@ Animator:
   m_GameObject: {fileID: 511859088}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 045bbc54ed7866a47971c886c5bb0c0b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -599,12 +599,14 @@ MonoBehaviour:
   dano: 13
   defesa: 13
   selecionado: 0
-  prefabPersonagem: {fileID: 0}
+  prefabPersonagem: {fileID: 4786197806902252743, guid: ad29b7bc0229b16458eecc8b298ac3e5,
+    type: 3}
   statusDefesa: {fileID: 203538995}
   statusDano: {fileID: 576914137}
   statusNome: {fileID: 2131550087}
-  cenaDestino: 
-  pontoDeSpawn: {fileID: 0}
+  cenaDestino: Jogo 1
+  pontoDeSpawn: {fileID: 6964218545886930837, guid: 9930bec3676089f4fb0d35ea61316356,
+    type: 3}
 --- !u!1 &548325614 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c0c9260899b6d3e47be7e829d333014f,
@@ -621,7 +623,7 @@ Animator:
   m_GameObject: {fileID: 548325614}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7f3484b9ee4d4964baabbdacb241f3dc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 616d1ff98fb85e44ea5349aed025a842, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -669,12 +671,14 @@ MonoBehaviour:
   dano: 15
   defesa: 15
   selecionado: 0
-  prefabPersonagem: {fileID: 0}
+  prefabPersonagem: {fileID: 4039806954106790314, guid: 308705f6ec2d57641ac821694468c6ba,
+    type: 3}
   statusDefesa: {fileID: 203538995}
   statusDano: {fileID: 576914137}
   statusNome: {fileID: 2131550087}
-  cenaDestino: 
-  pontoDeSpawn: {fileID: 0}
+  cenaDestino: Jogo 1
+  pontoDeSpawn: {fileID: 6964218545886930837, guid: 9930bec3676089f4fb0d35ea61316356,
+    type: 3}
 --- !u!1 &576914136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2781,7 +2785,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 548325619}
         m_TargetAssemblyTypeName: SelecionarPersonagens, Assembly-CSharp
         m_MethodName: TrocarCena
         m_Mode: 1
@@ -2793,13 +2797,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 511859088}
+      - m_Target: {fileID: 511859093}
         m_TargetAssemblyTypeName: SelecionarPersonagens, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TrocarCena
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
