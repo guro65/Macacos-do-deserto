@@ -8,7 +8,6 @@ public class Npc : MonoBehaviour
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float paraDeSeguirDistancia = 3f;
     [SerializeField] private float tempoEntreAcoes = 1.5f;  // Tempo entre as ações de ataque/defesa
-    [SerializeField] private float tempoEntreAtaques;
     private bool estaSeguindo;
     private bool estaAtacando;
     private Rigidbody rb;
@@ -80,27 +79,19 @@ public class Npc : MonoBehaviour
             switch (acao)
             {
                 case 0:
-                
-                    animator.SetTrigger("Ataque");
-                    new WaitForSeconds(tempoEntreAtaques);
+                    animator.SetTrigger("Ataque1");
                     Debug.Log("Executando Ataque 1");
                     break;
                 case 1:
-                
                     animator.SetTrigger("Ataque2");
-                    new WaitForSeconds(tempoEntreAtaques);
                     Debug.Log("Executando Ataque 2");
                     break;
                 case 2:
-                
                     animator.SetTrigger("Ataque3");
-                    new WaitForSeconds(tempoEntreAtaques);
                     Debug.Log("Executando Ataque 3");
                     break;
                 case 3:
-                
                     animator.SetTrigger("Defesa");
-                    new WaitForSeconds(tempoEntreAtaques);
                     Debug.Log("Executando Defesa");
                     break;
             }

@@ -171,7 +171,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.4479923, z: 1}
   m_Center: {x: 0, y: 1.2277541, z: 0}
---- !u!114 &27108962
+--- !u!114 &27108961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Guro
-  dano: 12
-  defesa: 12
+  dano: 10
+  defesa: 10
   selecionado: 0
   prefabPersonagem: {fileID: 315940056452958041, guid: 30c00d94342a2054daa92f88df97e30f,
     type: 3}
@@ -2409,7 +2409,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bea6a74ba04804d429b5ea74c481feaa,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 27108962}
+      addedObject: {fileID: 27108961}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bea6a74ba04804d429b5ea74c481feaa,
         type: 3}
       insertIndex: -1
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 27108962}
+      - m_Target: {fileID: 27108961}
         m_TargetAssemblyTypeName: SelecionarPersonagens, Assembly-CSharp
         m_MethodName: TrocarCena
         m_Mode: 1
