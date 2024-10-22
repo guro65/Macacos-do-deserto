@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Player : MonoBehaviour
 {
     [SerializeField] private int vida;
@@ -114,6 +112,10 @@ public class Player : MonoBehaviour
         }
 
         TurnAround();
+        if(this.gameObject.CompareTag("Arma"))
+        {
+            
+        }
     }
 
     void FixedUpdate()
@@ -196,6 +198,19 @@ public class Player : MonoBehaviour
                 Debug.Log("Voce não tem a chave.");
             }
         }
+
+         if(other.gameObject.CompareTag("inimigo"))
+         {
+            other.gameObject.GetComponent<Npc>().EstaSeguindo();
+         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.CompareTag("inimigo"))
+         {
+            other.gameObject.GetComponent<Npc>().NaoEstaSeguindo();
+         }
     }
 
     private void OnCollisionExit(Collision other)
@@ -235,6 +250,8 @@ public class Player : MonoBehaviour
         }
         
     }
+
+ 
     
     //desculpa
 }

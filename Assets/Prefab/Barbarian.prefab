@@ -1027,12 +1027,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &3139439436965293496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,8 +1274,6 @@ GameObject:
   m_Component:
   - component: {fileID: 481922082072189762}
   - component: {fileID: 1319080497833603483}
-  - component: {fileID: -1745468594088889870}
-  - component: {fileID: 5782417955654240624}
   - component: {fileID: 2105386519224874870}
   m_Layer: 0
   m_Name: Barbarian
@@ -1328,49 +1326,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-1745468594088889870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4786197806902252743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6c375b97bcbaed4b9ede3695bc7c82e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  estaVivo: 1
-  forcaPulo: 5
-  ouro: 0
-  vida: 0
-  velocidade: 10
-  temChave: 0
-  pegando: 0
-  podePegar: 0
-  inventario: []
---- !u!65 &5782417955654240624
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4786197806902252743}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2.326666, z: 1}
-  m_Center: {x: 0, y: 1.1742231, z: 0}
 --- !u!54 &2105386519224874870
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,41 +1,37 @@
 using System.Collections;
 using UnityEngine;
-
 public class Npc : MonoBehaviour
 {
     [Header("Configurações Principais")]
     [SerializeField] private GameObject player;
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float paraDeSeguirDistancia = 3f;
-    [SerializeField] private float tempoEntreAcoes = 1.5f;  // Tempo entre as ações de ataque/defesa
+    [SerializeField] private float tempoEntreAcoes = 2.5f;
+    [SerializeField] private float tempoSeguir = 2f;
+    [SerializeField]private bool estaSeguindo;
+    [SerializeField]private bool estaAtacando;   // Tempo entre as ações de ataque/defesa
     public float danoInimigo;
     public int vida;
-    private bool estaSeguindo;
-    private bool estaAtacando;
     private Rigidbody rb;
-    private Animator animator;
-    
+    private Animator animator;    
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player"); // Encontra o player por nome
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        estaSeguindo = true;
+        estaSeguindo = false;
         estaAtacando = false;
     }
 
     private void Update()
     {
-        if (player != null && estaSeguindo)
+        if (estaSeguindo)
         {
             SeguirPlayer();
         }
 
-        if (velocidade > 1)
-        {
-            animator.SetBool("Andar", true); // Animação de andar
-        }
+    
     }
 
     // Faz o inimigo seguir o player
@@ -66,10 +62,26 @@ public class Npc : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !estaAtacando)
         {
-            estaSeguindo = false;  // Para de seguir o player
+            
             estaAtacando = true;   // Começa as ações de ataque/defesa
+            //StartCoroutine(ExecutarAcoesAleatorias());  // Inicia o ciclo de ações aleatórias
+        }
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player") && estaAtacando)
+        {
             StartCoroutine(ExecutarAcoesAleatorias());  // Inicia o ciclo de ações aleatórias
         }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        StopCoroutine(ExecutarAcoesAleatorias());
+        new WaitForSeconds(0.3f);
+        estaAtacando = false;
+        SeguirPlayer();
     }
 
     // Corrotina que executa ações aleatórias (ataques e defesa)
@@ -77,12 +89,12 @@ public class Npc : MonoBehaviour
     {
         while (estaAtacando)
         {
-            int acao = Random.Range(0, 4); // Gera um número aleatório entre 0 e 3 (4 ações no total)
-
+            int acao = Random.Range(0, 3); // Gera um número aleatório entre 0 e 3 (3 ações no total)
+            animator.SetBool("Andar", false);
             switch (acao)
             {
                 case 0:
-                    animator.SetTrigger("Ataque1");
+                    animator.SetTrigger("Ataque");
                     Debug.Log("Executando Ataque 1");
                     break;
                 case 1:
@@ -98,21 +110,21 @@ public class Npc : MonoBehaviour
                     Debug.Log("Executando Defesa");
                     break;
             }
-
             // Espera o tempo entre as ações antes de executar a próxima
             yield return new WaitForSeconds(tempoEntreAcoes);
         }
     }
 
-    // Quando o inimigo sai da colisão com o player
-    private void OnCollisionExit(Collision other)
+    public void EstaSeguindo()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            estaAtacando = false;  // Para as ações de ataque/defesa
-            estaSeguindo = true;   // Volta a seguir o player
-            animator.SetBool("Andar", true); // Retorna à animação de andar
-
-        }
+        estaSeguindo = true;
     }
+
+    public void NaoEstaSeguindo()
+    {
+        estaSeguindo = false;
+    }
+
+    // Quando o inimigo sai da colisão com o player
+   
 }

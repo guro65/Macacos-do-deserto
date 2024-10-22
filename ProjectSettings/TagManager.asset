@@ -11,6 +11,8 @@ TagManager:
   - StatusDefesa
   - StatusDano
   - StatusNome
+  - inimigo
+  - Arma
   layers:
   - Default
   - TransparentFX
