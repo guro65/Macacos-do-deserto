@@ -1274,7 +1274,9 @@ GameObject:
   m_Component:
   - component: {fileID: 481922082072189762}
   - component: {fileID: 1319080497833603483}
+  - component: {fileID: 7336004512241196932}
   - component: {fileID: 2105386519224874870}
+  - component: {fileID: 2548395337695817876}
   m_Layer: 0
   m_Name: Barbarian
   m_TagString: Player
@@ -1326,6 +1328,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7336004512241196932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786197806902252743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c375b97bcbaed4b9ede3695bc7c82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 0
+  ataque: 0
+  velocidade: 10
+  forcaPulo: 5
+  ouro: 0
+  temChave: 0
+  pegando: 0
+  podePegar: 0
+  animator: {fileID: 0}
+  estaVivo: 1
+  inventario: []
 --- !u!54 &2105386519224874870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1353,6 +1378,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &2548395337695817876
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786197806902252743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3975699
+  m_Height: 2.383674
+  m_Direction: 1
+  m_Center: {x: -0.00005543232, y: 1.1952702, z: 5.3925085e-14}
 --- !u!1 &4833035980979418706
 GameObject:
   m_ObjectHideFlags: 0
