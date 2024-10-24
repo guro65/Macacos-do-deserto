@@ -129,4 +129,9 @@ public class Npc : MonoBehaviour
         estaSeguindo = false;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 578bdf28feb95e9048e479acd757d923de85a792
