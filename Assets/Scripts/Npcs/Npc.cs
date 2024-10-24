@@ -138,6 +138,11 @@ public class Npc : MonoBehaviour
     {
         estaSeguindo = false;
     }
+<<<<<<< HEAD
+}
+
+=======
 
 
 }
+>>>>>>> a71f9199ddc6b46a96dfeb04ff0a07f94e13153a
