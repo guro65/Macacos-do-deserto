@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int vida;
+    [SerializeField] private int vida = 100;
     [SerializeField] private float ataque;
     [SerializeField] private float velocidade;
     [SerializeField] private int forcaPulo;
@@ -156,12 +156,19 @@ public class Player : MonoBehaviour
             estaPulando = false;
             animator.SetBool("EstaNoChao", true);
         }
-    
+
+        if(collision.gameObject.CompareTag("Arma"))
+        {
+            
+        }
+
     }
 
     private void OnTriggerEnter()
     {
         podePegar = true;
+
+       
     }
 
     private void OnTriggerStay(Collider other)
@@ -251,7 +258,6 @@ public class Player : MonoBehaviour
         
     }
 
- 
-    
+
     //desculpa
 }

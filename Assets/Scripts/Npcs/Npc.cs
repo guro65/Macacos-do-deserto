@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 public class Npc : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class Npc : MonoBehaviour
     [SerializeField] private float tempoSeguir = 2f;
     [SerializeField]private bool estaSeguindo;
     [SerializeField]private bool estaAtacando;   // Tempo entre as ações de ataque/defesa
-    public float danoInimigo;
-    public int vida;
+    public int danoInimigo;
+    public int vida = 100;
     private Rigidbody rb;
     private Animator animator;    
 
@@ -96,14 +97,17 @@ public class Npc : MonoBehaviour
                 case 0:
                     animator.SetTrigger("Ataque");
                     Debug.Log("Executando Ataque 1");
+                    danoInimigo = 10;
                     break;
                 case 1:
                     animator.SetTrigger("Ataque2");
                     Debug.Log("Executando Ataque 2");
+                    danoInimigo = 20;
                     break;
                 case 2:
                     animator.SetTrigger("Ataque3");
                     Debug.Log("Executando Ataque 3");
+                    danoInimigo = 40;
                     break;
                 case 3:
                     animator.SetTrigger("Defesa");
@@ -125,6 +129,5 @@ public class Npc : MonoBehaviour
         estaSeguindo = false;
     }
 
-    // Quando o inimigo sai da colisão com o player
-   
 }
+
