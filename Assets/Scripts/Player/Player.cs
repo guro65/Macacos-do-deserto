@@ -209,6 +209,7 @@ public class Player : MonoBehaviour
          if(other.gameObject.CompareTag("inimigo"))
          {
             other.gameObject.GetComponent<Npc>().EstaSeguindo();
+            
          }
     }
 

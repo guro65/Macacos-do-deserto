@@ -15,6 +15,7 @@ public class Npc : MonoBehaviour
     public int vida = 100;
     private Rigidbody rb;
     private Animator animator;    
+   
 
     private void Start()
     {
@@ -23,12 +24,14 @@ public class Npc : MonoBehaviour
         animator = GetComponent<Animator>();
         estaSeguindo = false;
         estaAtacando = false;
+        animator.SetBool("EstaParado", true);
     }
 
     private void Update()
     {
         if (estaSeguindo)
         {
+            animator.SetBool("EstaParado", false);
             SeguirPlayer();
         }
 
@@ -63,7 +66,7 @@ public class Npc : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !estaAtacando)
         {
-            
+            NaoEstaSeguindo();
             estaAtacando = true;   // Começa as ações de ataque/defesa
             //StartCoroutine(ExecutarAcoesAleatorias());  // Inicia o ciclo de ações aleatórias
         }
@@ -74,14 +77,16 @@ public class Npc : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && estaAtacando)
         {
             StartCoroutine(ExecutarAcoesAleatorias());  // Inicia o ciclo de ações aleatórias
+            
         }
     }
 
     private void OnCollisionExit(Collision other)
     {
         StopCoroutine(ExecutarAcoesAleatorias());
-        new WaitForSeconds(0.3f);
+        //new WaitForSeconds(0.3f);
         estaAtacando = false;
+        animator.SetBool("Andar", true);
         SeguirPlayer();
     }
 
@@ -95,27 +100,32 @@ public class Npc : MonoBehaviour
             switch (acao)
             {
                 case 0:
+                    new WaitForSeconds(1);
                     animator.SetTrigger("Ataque");
                     Debug.Log("Executando Ataque 1");
                     danoInimigo = 10;
                     break;
                 case 1:
+                     new WaitForSeconds(1);
                     animator.SetTrigger("Ataque2");
                     Debug.Log("Executando Ataque 2");
                     danoInimigo = 20;
                     break;
                 case 2:
+                    new WaitForSeconds(1);
                     animator.SetTrigger("Ataque3");
                     Debug.Log("Executando Ataque 3");
                     danoInimigo = 40;
                     break;
                 case 3:
+                    new WaitForSeconds(1);
                     animator.SetTrigger("Defesa");
                     Debug.Log("Executando Defesa");
                     break;
             }
             // Espera o tempo entre as ações antes de executar a próxima
             yield return new WaitForSeconds(tempoEntreAcoes);
+            
         }
     }
 
@@ -129,9 +139,5 @@ public class Npc : MonoBehaviour
         estaSeguindo = false;
     }
 
-<<<<<<< HEAD
-}
-=======
-}
 
->>>>>>> 578bdf28feb95e9048e479acd757d923de85a792
+}
