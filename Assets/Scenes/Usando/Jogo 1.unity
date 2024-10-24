@@ -1236,6 +1236,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Arma
       objectReference: {fileID: 0}
+    - target: {fileID: 2105386519224874870, guid: ad29b7bc0229b16458eecc8b298ac3e5,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4786197806902252743, guid: ad29b7bc0229b16458eecc8b298ac3e5,
         type: 3}
       propertyPath: m_Name
