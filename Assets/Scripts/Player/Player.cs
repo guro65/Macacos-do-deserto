@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private int vidaAtual;
     [SerializeField] private int vida = 100;
     [SerializeField] private float ataque;
     [SerializeField] private float velocidade;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private bool estaVivo = true;
     [SerializeField] private List<GameObject> inventario = new List<GameObject>();
+    [SerializeField] private BarraDeVida barraDeVida;
     private Rigidbody rb;
     private bool estaPulando;
     private Vector3 angleRotation;
@@ -27,6 +29,8 @@ public class Player : MonoBehaviour
         angleRotation = new Vector3(0, 90, 0);
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        vidaAtual = vida;
+        barraDeVida.AlteraBarraDeVida(vidaAtual,vida);
     }
 
     void Update()
@@ -113,6 +117,8 @@ public class Player : MonoBehaviour
             defendendo = false;
         }
 
+      
+
         TurnAround();
     }
 
@@ -120,8 +126,9 @@ public class Player : MonoBehaviour
     {
         int danoRecebido = defendendo ? dano / 2 : dano;
         vida -= danoRecebido;
-        if (vida <= 0)
+        if (vidaAtual <= 0)
         {
+            vidaAtual -= dano;
             estaVivo = false;
             animator.SetTrigger("Morrer");
         }
