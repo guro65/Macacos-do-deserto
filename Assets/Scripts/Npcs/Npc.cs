@@ -52,17 +52,30 @@ public class Npc : MonoBehaviour
 
     private void SeguirPlayer()
     {
-        float distancia = Vector3.Distance(player.transform.position, transform.position);
-        if (distancia > paraDeSeguirDistancia)
+        Vector3 moveDirection = (player.transform.position - transform.position).normalized;
+
+        // Move o inimigo na direção do player
+        rb.velocity = moveDirection * velocidade;
+
+        // Verifica se está próximo o suficiente para parar de seguir
+        if (Vector3.Distance(player.transform.position, transform.position) <= paraDeSeguirDistancia)
         {
-            Vector3 direcao = (player.transform.position - transform.position).normalized;
-            rb.MovePosition(rb.position + direcao * velocidade * Time.deltaTime);
-            animator.SetBool("Andar", true);
+            estaSeguindo = false;
+            rb.velocity = Vector3.zero;
+            animator.SetBool("Andar", false); // Para a animação de andar
+            return; // Sai da função
+        }
+
+        // Ajusta a rotação do inimigo para ficar de frente para o player
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            animator.SetBool("Andar", true); // Ativa a animação de andar
         }
         else
         {
-            animator.SetBool("Andar", false);
-            StartCoroutine(ExecutarAcoesAleatorias());
+            animator.SetBool("Andar", false); // Para a animação de andar se não há movimento
         }
     }
 
@@ -75,6 +88,7 @@ public class Npc : MonoBehaviour
     {
         estaSeguindo = false;
         animator.SetBool("EstaParado", true);
+        animator.SetBool("Andar", false); // Para a animação de andar quando não está seguindo
     }
 
     private IEnumerator ExecutarAcoesAleatorias()
@@ -104,6 +118,27 @@ public class Npc : MonoBehaviour
                     break;
             }
             yield return new WaitForSeconds(tempoEntreAcoes);
+        }
+    }
+
+    // Método chamado quando algo entra em contato com o capsule collider
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Inicia as ações de ataque quando o jogador entra em contato
+            estaAtacando = true;
+            StartCoroutine(ExecutarAcoesAleatorias());
+        }
+    }
+
+    // Método chamado quando o jogador sai do contato
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            estaAtacando = false;
+            animator.SetBool("Andar", true); // Retorna a animação de andar se o jogador sair
         }
     }
 }
