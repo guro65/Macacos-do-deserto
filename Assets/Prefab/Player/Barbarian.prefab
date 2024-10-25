@@ -923,13 +923,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2936000580002250698}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.052517608, y: -0.02572261, z: 0.0013532073, w: 0.9982878}
-  m_LocalPosition: {x: 0.4, y: 2.669, z: -5.183}
+  m_LocalRotation: {x: 0.08219746, y: -0.025670962, z: 0.0021179598, w: 0.9962832}
+  m_LocalPosition: {x: 0.4, y: 3.17, z: -5.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 481922082072189762}
-  m_LocalEulerAnglesHint: {x: 6.023, y: -2.952, z: 0}
+  m_LocalEulerAnglesHint: {x: 9.433, y: -2.952, z: 0}
 --- !u!20 &3741113860031648548
 Camera:
   m_ObjectHideFlags: 0
@@ -1027,12 +1027,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &3139439436965293496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,7 +1317,7 @@ Animator:
   m_GameObject: {fileID: 4786197806902252743}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 045bbc54ed7866a47971c886c5bb0c0b, type: 2}
+  m_Controller: {fileID: 9100000, guid: ca8ec21fd4a51064b8ef9738a3540611, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

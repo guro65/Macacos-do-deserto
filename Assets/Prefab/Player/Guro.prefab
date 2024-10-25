@@ -5052,6 +5052,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bea6a74ba04804d429b5ea74c481feaa,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7858994459310080082}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bea6a74ba04804d429b5ea74c481feaa,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6215328200131240566}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bea6a74ba04804d429b5ea74c481feaa,
         type: 3}
@@ -5061,10 +5065,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1370325153939310259}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bea6a74ba04804d429b5ea74c481feaa,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7858994459310080082}
   m_SourcePrefab: {fileID: 100100000, guid: bea6a74ba04804d429b5ea74c481feaa, type: 3}
 --- !u!1 &315940056452958041 stripped
 GameObject:
@@ -5072,6 +5072,29 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 622367696394074632}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7858994459310080082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315940056452958041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c375b97bcbaed4b9ede3695bc7c82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 100
+  ataque: 20
+  velocidade: 10
+  forcaPulo: 5
+  ouro: 0
+  temChave: 0
+  pegando: 0
+  podePegar: 0
+  animator: {fileID: 0}
+  estaVivo: 1
+  inventario: []
 --- !u!54 &6215328200131240566
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5143,28 +5166,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7858994459310080082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315940056452958041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6c375b97bcbaed4b9ede3695bc7c82e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  estaVivo: 1
-  forcaPulo: 5
-  ouro: 0
-  vida: 0
-  velocidade: 10
-  temChave: 0
-  pegando: 0
-  podePegar: 0
-  inventario: []
 --- !u!4 &1092581827589332451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bea6a74ba04804d429b5ea74c481feaa,

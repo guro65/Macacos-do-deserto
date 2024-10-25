@@ -21,7 +21,7 @@ public class ItemPickup : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Pickup;
+        //Pickup;
     }
 
     private void OnMouseOver()

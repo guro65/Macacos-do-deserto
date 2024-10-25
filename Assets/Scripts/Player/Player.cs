@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class Player : MonoBehaviour
 {
     [SerializeField] private int vida = 100;
@@ -16,7 +17,8 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private bool estaPulando;
     private Vector3 angleRotation;
-    // Start is called before the first frame update
+    private bool defendendo = false;
+
     void Start()
     {
         temChave = false;
@@ -27,15 +29,14 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         if(Input.GetKeyDown(KeyCode.E) && podePegar)
         {
             animator.SetTrigger("Pegando");
             pegando = true;
         }
+
         if(Input.GetKey(KeyCode.W))
         {
             animator.SetBool("Andar", true);
@@ -62,11 +63,6 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("Andar", false);
             animator.SetBool("AndarParaTras", false);
-            //velocidade = 0;
-            /*if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
-            {
-            velocidade = 10;
-            }*/
         }
 
         if(Input.GetKeyDown(KeyCode.Space) && !estaPulando)
@@ -78,6 +74,7 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("Ataque");
+            Atacar();
         }
 
         if(Input.GetMouseButtonDown(1))
@@ -109,23 +106,47 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q))
         {
             animator.SetTrigger("Defesa");
+            defendendo = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.Q))
+        {
+            defendendo = false;
         }
 
         TurnAround();
-        if(this.gameObject.CompareTag("Arma"))
+    }
+
+    public void ReceberDano(int dano)
+    {
+        int danoRecebido = defendendo ? dano / 2 : dano;
+        vida -= danoRecebido;
+        if (vida <= 0)
         {
-            
+            estaVivo = false;
+            animator.SetTrigger("Morrer");
         }
     }
 
-    void FixedUpdate()
+    private void Atacar()
+    {
+        Collider[] hitEnemies = Physics.OverlapSphere(transform.position + transform.forward, 1.5f);
+        foreach (Collider enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Inimigo"))
+            {
+                enemy.GetComponent<Npc>().ReceberDano((int)ataque);
+            }
+        }
+    }
+
+    private void FixedUpdate()
     {
 
     }
 
     private void Walk(float velo = 1)
     {
-        if((velo ==1))
+        if((velo == 1))
         {
             velo = velocidade;
         }
@@ -151,37 +172,32 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.CompareTag("Inimigo"))
+        {
+            ReceberDano(collision.gameObject.GetComponent<Npc>().danoInimigo);
+        }
+
         if(collision.gameObject.CompareTag("Chao"))
         {
             estaPulando = false;
             animator.SetBool("EstaNoChao", true);
         }
-
-        if(collision.gameObject.CompareTag("Arma"))
-        {
-            
-        }
-
     }
 
     private void OnTriggerEnter()
     {
         podePegar = true;
-
-       
     }
 
     private void OnTriggerStay(Collider other)
     {
-
         Debug.Log(other.gameObject.tag);
-        
-        
+
         if(other.gameObject.CompareTag("Chave") && pegando)
         {
-            inventario.Add(Instantiate(other.gameObject.GetComponent<Chave>().CopiaDaChave()));
-            int numero = other.gameObject.GetComponent<Chave>().PegarNumeroChave();
-            Debug.LogFormat($"Chave número: {numero} inserida no invantario");
+            inventario.Add(Instantiate(other.gameObject.GetComponent<ChaveAntiga>().CopiaDaChave()));
+            int numero = other.gameObject.GetComponent<ChaveAntiga>().PegarNumeroChave();
+            Debug.LogFormat($"Chave número: {numero} inserida no inventário");
             Destroy(other.gameObject);
             pegando = false;
             podePegar = false;
@@ -198,27 +214,25 @@ public class Player : MonoBehaviour
             if(VerificaChave(other.gameObject.GetComponent<Bau>().PegarNumeroFechadura()))
             {
                 other.gameObject.GetComponent<Animator>().SetTrigger("AbrirBau");
-                
             }
             else
             {
-                Debug.Log("Voce não tem a chave.");
+                Debug.Log("Você não tem a chave.");
             }
         }
 
-         if(other.gameObject.CompareTag("inimigo"))
-         {
+        if(other.gameObject.CompareTag("Inimigo"))
+        {
             other.gameObject.GetComponent<Npc>().EstaSeguindo();
-            
-         }
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.CompareTag("inimigo"))
-         {
+        if(other.gameObject.CompareTag("Inimigo"))
+        {
             other.gameObject.GetComponent<Npc>().NaoEstaSeguindo();
-         }
+        }
     }
 
     private void OnCollisionExit(Collision other)
@@ -233,7 +247,7 @@ public class Player : MonoBehaviour
         {
             if(item.gameObject.CompareTag("Chave"))
             {
-                if(item.gameObject.GetComponent<Chave>().PegarNumeroChave() == chave)
+                if(item.gameObject.GetComponent<ChaveAntiga>().PegarNumeroChave() == chave)
                 {
                     return true;
                 }
@@ -256,9 +270,5 @@ public class Player : MonoBehaviour
             }
             bauTesouro.RemoverConteudoBau();
         }
-        
     }
-
-
-    //desculpa
 }

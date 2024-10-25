@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Chave : MonoBehaviour
+public class ChaveAntiga : MonoBehaviour
 {
     [SerializeField] private int numeroDaChave;
 

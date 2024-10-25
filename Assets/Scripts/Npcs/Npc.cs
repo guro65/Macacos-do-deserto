@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+
 public class Npc : MonoBehaviour
 {
     [Header("Configurações Principais")]
@@ -9,17 +10,17 @@ public class Npc : MonoBehaviour
     [SerializeField] private float paraDeSeguirDistancia = 3f;
     [SerializeField] private float tempoEntreAcoes = 2.5f;
     [SerializeField] private float tempoSeguir = 2f;
-    [SerializeField]private bool estaSeguindo;
-    [SerializeField]private bool estaAtacando;   // Tempo entre as ações de ataque/defesa
+    [SerializeField] private bool estaSeguindo;
+    [SerializeField] private bool estaAtacando;
     public int danoInimigo;
     public int vida = 100;
     private Rigidbody rb;
-    private Animator animator;    
-   
+    private Animator animator;
+    private bool defendendo = false;
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player"); // Encontra o player por nome
+        player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         estaSeguindo = false;
@@ -34,98 +35,34 @@ public class Npc : MonoBehaviour
             animator.SetBool("EstaParado", false);
             SeguirPlayer();
         }
-
-    
     }
 
-    // Faz o inimigo seguir o player
+    public void ReceberDano(int dano)
+    {
+        int danoRecebido = defendendo ? dano / 2 : dano;
+        vida -= danoRecebido;
+        if (vida <= 0)
+        {
+            animator.SetTrigger("Morrer");
+            estaSeguindo = false;
+            estaAtacando = false;
+            rb.velocity = Vector3.zero;
+        }
+    }
+
     private void SeguirPlayer()
     {
-        Vector3 moveDirection = (player.transform.position - transform.position).normalized;
-
-        // Move o inimigo na direção do player
-        rb.velocity = moveDirection * velocidade;
-
-        // Verifica se está próximo o suficiente para parar de seguir
-        if (Vector3.Distance(player.transform.position, transform.position) <= paraDeSeguirDistancia)
+        float distancia = Vector3.Distance(player.transform.position, transform.position);
+        if (distancia > paraDeSeguirDistancia)
         {
-            estaSeguindo = false;
-            rb.velocity = Vector3.zero; // Para o movimento
+            Vector3 direcao = (player.transform.position - transform.position).normalized;
+            rb.MovePosition(rb.position + direcao * velocidade * Time.deltaTime);
+            animator.SetBool("Andar", true);
         }
-
-        // Ajusta a rotação do inimigo para ficar de frente para o player
-        if (moveDirection != Vector3.one)
+        else
         {
-            float angle = Mathf.Atan2(moveDirection.z, moveDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
-        }
-    }
-
-    // Quando o inimigo colide com o player
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player") && !estaAtacando)
-        {
-            NaoEstaSeguindo();
-            estaAtacando = true;   // Começa as ações de ataque/defesa
-            //StartCoroutine(ExecutarAcoesAleatorias());  // Inicia o ciclo de ações aleatórias
-        }
-    }
-
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player") && estaAtacando)
-        {
-            StartCoroutine(ExecutarAcoesAleatorias());  // Inicia o ciclo de ações aleatórias
-            
-        }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        StopCoroutine(ExecutarAcoesAleatorias());
-        //new WaitForSeconds(0.3f);
-        estaAtacando = false;
-        animator.SetBool("Andar", true);
-        SeguirPlayer();
-    }
-
-    // Corrotina que executa ações aleatórias (ataques e defesa)
-    private IEnumerator ExecutarAcoesAleatorias()
-    {
-        while (estaAtacando)
-        {
-            int acao = Random.Range(0, 3); // Gera um número aleatório entre 0 e 3 (3 ações no total)
             animator.SetBool("Andar", false);
-            switch (acao)
-            {
-                case 0:
-                    new WaitForSeconds(1);
-                    animator.SetTrigger("Ataque");
-                    Debug.Log("Executando Ataque 1");
-                    danoInimigo = 10;
-                    break;
-                case 1:
-                     new WaitForSeconds(1);
-                    animator.SetTrigger("Ataque2");
-                    Debug.Log("Executando Ataque 2");
-                    danoInimigo = 20;
-                    break;
-                case 2:
-                    new WaitForSeconds(1);
-                    animator.SetTrigger("Ataque3");
-                    Debug.Log("Executando Ataque 3");
-                    danoInimigo = 40;
-                    break;
-                case 3:
-                    new WaitForSeconds(1);
-                    animator.SetTrigger("Defesa");
-                    Debug.Log("Executando Defesa");
-                    break;
-            }
-            // Espera o tempo entre as ações antes de executar a próxima
-            yield return new WaitForSeconds(tempoEntreAcoes);
-            
+            StartCoroutine(ExecutarAcoesAleatorias());
         }
     }
 
@@ -137,12 +74,36 @@ public class Npc : MonoBehaviour
     public void NaoEstaSeguindo()
     {
         estaSeguindo = false;
+        animator.SetBool("EstaParado", true);
     }
-<<<<<<< HEAD
+
+    private IEnumerator ExecutarAcoesAleatorias()
+    {
+        while (estaAtacando)
+        {
+            int acao = Random.Range(0, 3);
+            animator.SetBool("Andar", false);
+            switch (acao)
+            {
+                case 0:
+                    yield return new WaitForSeconds(1);
+                    animator.SetTrigger("Ataque");
+                    player.GetComponent<Player>().ReceberDano(danoInimigo);
+                    break;
+                case 1:
+                    yield return new WaitForSeconds(1);
+                    animator.SetTrigger("Ataque2");
+                    player.GetComponent<Player>().ReceberDano(danoInimigo * 2);
+                    break;
+                case 2:
+                    yield return new WaitForSeconds(1);
+                    animator.SetTrigger("Defesa");
+                    defendendo = true;
+                    yield return new WaitForSeconds(tempoEntreAcoes);
+                    defendendo = false;
+                    break;
+            }
+            yield return new WaitForSeconds(tempoEntreAcoes);
+        }
+    }
 }
-
-=======
-
-
-}
->>>>>>> a71f9199ddc6b46a96dfeb04ff0a07f94e13153a

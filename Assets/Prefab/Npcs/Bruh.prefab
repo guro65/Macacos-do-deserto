@@ -1742,9 +1742,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  Velocidade: 5
-  ParaDseguir: 3
-  tempo: 1.5
+  velocidade: 5
+  paraDeSeguirDistancia: 3
+  tempoEntreAcoes: 2.5
+  tempoSeguir: 2
+  estaSeguindo: 0
+  estaAtacando: 0
+  danoInimigo: 0
+  vida: 100
 --- !u!95 &3752882139125301535
 Animator:
   serializedVersion: 5
