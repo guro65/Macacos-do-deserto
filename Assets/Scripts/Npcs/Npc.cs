@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Npc : MonoBehaviour
 {
+    
     [Header("Configurações Principais")]
     [SerializeField] private GameObject player;
     [SerializeField] private float velocidade = 5f;
@@ -11,7 +12,10 @@ public class Npc : MonoBehaviour
     [SerializeField] private float tempoSeguir = 2f;
     [SerializeField] private bool estaSeguindo;
     [SerializeField] private bool estaAtacando;
+    //[SerializeField] private BarraDeVida barraDeVida;
+   
     public int danoInimigo;
+    //private int vidaAtual;
     public int vida = 100;
     private Rigidbody rb;
     private Animator animator;
@@ -27,9 +31,14 @@ public class Npc : MonoBehaviour
         estaSeguindo = false;
         estaAtacando = false;
         animator.SetBool("EstaParado", true);
+<<<<<<< HEAD
 
         // Obtém a referência ao controlador de objetivos na cena
         controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
+=======
+       // vidaAtual = vidaInimigo;
+       // barraDeVida.AlteraBarraDeVida(vidaAtual,vidaInimigo);
+>>>>>>> 0726ffdf92951e0a459f220361dea56bea66f3ef
     }
 
     private void Update()
@@ -114,7 +123,7 @@ public class Npc : MonoBehaviour
     {
         while (estaAtacando)
         {
-            int acao = Random.Range(0, 3);
+            int acao = Random.Range(0, 2);
             animator.SetBool("Andar", false);
             switch (acao)
             {
