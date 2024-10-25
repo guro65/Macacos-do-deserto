@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
@@ -18,6 +17,8 @@ public class Npc : MonoBehaviour
     private Animator animator;
     private bool defendendo = false;
 
+    private ContagemDeNpc controleDeObjetivo; // Referência ao controlador de objetivos
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -26,6 +27,9 @@ public class Npc : MonoBehaviour
         estaSeguindo = false;
         estaAtacando = false;
         animator.SetBool("EstaParado", true);
+
+        // Obtém a referência ao controlador de objetivos na cena
+        controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
     }
 
     private void Update()
@@ -41,12 +45,28 @@ public class Npc : MonoBehaviour
     {
         int danoRecebido = defendendo ? dano / 2 : dano;
         vida -= danoRecebido;
+
         if (vida <= 0)
         {
+            vida = 0;  // Garante que a vida não fique negativa
             animator.SetTrigger("Morrer");
             estaSeguindo = false;
             estaAtacando = false;
             rb.velocity = Vector3.zero;
+
+            // Notifica o controlador de objetivos que este NPC foi derrotado
+            if (controleDeObjetivo != null && gameObject.CompareTag("Inimigo"))
+            {
+                controleDeObjetivo.NpcDerrotado();
+                Debug.Log("NPC derrotado e notificado ao controle de objetivos.");
+            }
+
+            // Destrói o GameObject do NPC
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("NPC ainda tem vida: " + vida);
         }
     }
 
@@ -62,20 +82,19 @@ public class Npc : MonoBehaviour
         {
             estaSeguindo = false;
             rb.velocity = Vector3.zero;
-            animator.SetBool("Andar", false); // Para a animação de andar
-            return; // Sai da função
+            animator.SetBool("Andar", false);
+            return;
         }
 
-        // Ajusta a rotação do inimigo para ficar de frente para o player
         if (moveDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-            animator.SetBool("Andar", true); // Ativa a animação de andar
+            animator.SetBool("Andar", true);
         }
         else
         {
-            animator.SetBool("Andar", false); // Para a animação de andar se não há movimento
+            animator.SetBool("Andar", false);
         }
     }
 
@@ -88,7 +107,7 @@ public class Npc : MonoBehaviour
     {
         estaSeguindo = false;
         animator.SetBool("EstaParado", true);
-        animator.SetBool("Andar", false); // Para a animação de andar quando não está seguindo
+        animator.SetBool("Andar", false);
     }
 
     private IEnumerator ExecutarAcoesAleatorias()
@@ -121,24 +140,21 @@ public class Npc : MonoBehaviour
         }
     }
 
-    // Método chamado quando algo entra em contato com o capsule collider
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Inicia as ações de ataque quando o jogador entra em contato
             estaAtacando = true;
             StartCoroutine(ExecutarAcoesAleatorias());
         }
     }
 
-    // Método chamado quando o jogador sai do contato
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             estaAtacando = false;
-            animator.SetBool("Andar", true); // Retorna a animação de andar se o jogador sair
+            animator.SetBool("Andar", true);
         }
     }
 }
