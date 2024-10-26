@@ -1,9 +1,10 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
 {
-    
+
     [Header("Configurações Principais")]
     [SerializeField] private GameObject player;
     [SerializeField] private float velocidade = 5f;
@@ -13,7 +14,7 @@ public class Npc : MonoBehaviour
     [SerializeField] private bool estaSeguindo;
     [SerializeField] private bool estaAtacando;
     //[SerializeField] private BarraDeVida barraDeVida;
-   
+
     public int danoInimigo;
     //private int vidaAtual;
     public int vida = 100;
@@ -31,16 +32,18 @@ public class Npc : MonoBehaviour
         estaSeguindo = false;
         estaAtacando = false;
         animator.SetBool("EstaParado", true);
-<<<<<<< HEAD
-
+        animator.SetBool("Defesa", false);
         // Obtém a referência ao controlador de objetivos na cena
         controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
-=======
-       // vidaAtual = vidaInimigo;
-       // barraDeVida.AlteraBarraDeVida(vidaAtual,vidaInimigo);
->>>>>>> 0726ffdf92951e0a459f220361dea56bea66f3ef
+        // vidaAtual = vidaInimigo;
+        // barraDeVida.AlteraBarraDeVida(vidaAtual,vidaInimigo);
+
     }
 
+    public Npc(float tempoSeguir)
+    {
+        this.tempoSeguir = tempoSeguir;
+    }
     private void Update()
     {
         if (estaSeguindo)
@@ -71,6 +74,7 @@ public class Npc : MonoBehaviour
             }
 
             // Destrói o GameObject do NPC
+            new WaitForSeconds(2);
             Destroy(gameObject);
         }
         else
@@ -91,7 +95,8 @@ public class Npc : MonoBehaviour
         {
             estaSeguindo = false;
             rb.velocity = Vector3.zero;
-            animator.SetBool("Andar", false);
+            animator.SetBool("Andar", true);
+            estaAtacando = false;
             return;
         }
 
@@ -100,22 +105,26 @@ public class Npc : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             animator.SetBool("Andar", true);
+            estaSeguindo = true;
+
         }
         else
         {
+            estaSeguindo = false;
             animator.SetBool("Andar", false);
         }
     }
 
     public void EstaSeguindo()
     {
+        animator.SetBool("Andar", true);
         estaSeguindo = true;
     }
 
     public void NaoEstaSeguindo()
     {
         estaSeguindo = false;
-        animator.SetBool("EstaParado", true);
+        //animator.SetBool("EstaParado", true);
         animator.SetBool("Andar", false);
     }
 
@@ -123,25 +132,27 @@ public class Npc : MonoBehaviour
     {
         while (estaAtacando)
         {
+            estaSeguindo = false;
             int acao = Random.Range(0, 2);
             animator.SetBool("Andar", false);
             switch (acao)
             {
                 case 0:
-                    yield return new WaitForSeconds(1);
+                    new WaitForSeconds(1);
                     animator.SetTrigger("Ataque");
                     player.GetComponent<Player>().ReceberDano(danoInimigo);
                     break;
                 case 1:
-                    yield return new WaitForSeconds(1);
+                    new WaitForSeconds(1);
                     animator.SetTrigger("Ataque2");
                     player.GetComponent<Player>().ReceberDano(danoInimigo * 2);
                     break;
                 case 2:
-                    yield return new WaitForSeconds(1);
+                    new WaitForSeconds(1);
                     animator.SetTrigger("Defesa");
                     defendendo = true;
-                    yield return new WaitForSeconds(tempoEntreAcoes);
+                    player.GetComponent<Player>().ReceberDano(danoInimigo / 2);
+                    new WaitForSeconds(1);
                     defendendo = false;
                     break;
             }
@@ -153,16 +164,24 @@ public class Npc : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            estaAtacando = true;
+            estaSeguindo = false;
+            animator.SetBool("Andar", false);
             StartCoroutine(ExecutarAcoesAleatorias());
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        StartCoroutine(ExecutarAcoesAleatorias());
+    }
+    
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             estaAtacando = false;
+            StopCoroutine(ExecutarAcoesAleatorias());
+            estaSeguindo = true;
             animator.SetBool("Andar", true);
         }
     }

@@ -7,7 +7,7 @@ public class ContagemDeNpc : MonoBehaviour
 {
     [Header("Configurações de Objetivo")]
     [Tooltip("Quantidade de NPCs 'Inimigos' que devem ser derrotados. Essa quantidade será ignorada se houver mais NPCs na cena.")]
-    [SerializeField] private int npcsNecessarios = 5;
+    [SerializeField] private int npcsNecessarios = 6;
     [Tooltip("Nome da cena para a qual será mudada ao atingir o objetivo.")]
     [SerializeField] private string nomeCenaProxima;
 
@@ -21,6 +21,7 @@ public class ContagemDeNpc : MonoBehaviour
         foreach (var npc in npcs)
         {
             npcsNaCena.Add(npc);
+            npcsDerrotados = 0;
         }
 
         // Define a quantidade necessária com base na quantidade total de NPCs na cena

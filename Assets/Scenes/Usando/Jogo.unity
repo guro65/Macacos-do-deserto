@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -244,6 +243,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 2459843873200373472, guid: 97db425309d2f3a4ba7e09938effa9d9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2983861616857523290, guid: 97db425309d2f3a4ba7e09938effa9d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -321,10 +325,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3255690800551355459, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 045bbc54ed7866a47971c886c5bb0c0b, type: 2}
     - target: {fileID: 3499532689870885766, guid: ea54288004e730d459b02819c6557a46,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.6
+      value: -2.54
       objectReference: {fileID: 0}
     - target: {fileID: 3499532689870885766, guid: ea54288004e730d459b02819c6557a46,
         type: 3}
@@ -334,7 +343,7 @@ PrefabInstance:
     - target: {fileID: 3499532689870885766, guid: ea54288004e730d459b02819c6557a46,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.5
+      value: -5.85
       objectReference: {fileID: 0}
     - target: {fileID: 3499532689870885766, guid: ea54288004e730d459b02819c6557a46,
         type: 3}
@@ -376,7 +385,63 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Rogue (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.3392537
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1865724
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: vida
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: danoInimigo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: tempoEntreAcoes
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: paraDeSeguirDistancia
+      value: 0.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -444,7 +509,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Rogue (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.032570742
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.83315945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.0033781063
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.3471086
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.182645
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: vida
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: paraDeSeguirDistancia
+      value: 0.98
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -874,6 +975,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4405033588926654581, guid: 30c00d94342a2054daa92f88df97e30f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858994459310080082, guid: 30c00d94342a2054daa92f88df97e30f,
+        type: 3}
+      propertyPath: ataque
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1179,7 +1290,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Rogue (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.01245106
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.83315945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.0134379305
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.3328822
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1897582
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: vida
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: paraDeSeguirDistancia
+      value: 0.98
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1347,7 +1494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2adc9384d0d684facfb07a8a4dd859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcsNecessarios: 5
+  npcsNecessarios: 7
   nomeCenaProxima: Menu
 --- !u!4 &1399642843
 Transform:
@@ -1427,7 +1574,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Rogue (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.037609942
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.83315945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.0008584922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.3328822
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1897582
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: vida
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: paraDeSeguirDistancia
+      value: 0.98
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1488,6 +1671,7 @@ Terrain:
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
+  m_HeightmapMinimumLODSimplification: 0
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
@@ -2038,7 +2222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &919132149129415971
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6628,12 +6812,53 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Inimigo
       objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.019216394
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.83315945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938677142180640072, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.010055237
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.3506653
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176949315502892976, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1808666
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: vida
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
         type: 3}
       propertyPath: danoInimigo
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: tempoSeguir
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770868552479040934, guid: ea54288004e730d459b02819c6557a46,
+        type: 3}
+      propertyPath: paraDeSeguirDistancia
+      value: 0.98
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9011149217048188714, guid: ea54288004e730d459b02819c6557a46, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
