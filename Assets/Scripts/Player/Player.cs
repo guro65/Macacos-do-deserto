@@ -112,11 +112,11 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q))
         {
             animator.SetTrigger("Defesa");
-            defendendo = true;
+           // defendendo = true;
         }
         else if(Input.GetKeyUp(KeyCode.Q))
         {
-            defendendo = false;
+            //defendendo = false;
         }
 
       
