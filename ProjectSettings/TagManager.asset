@@ -13,6 +13,7 @@ TagManager:
   - StatusNome
   - Arma
   - Inimigo
+  - MorteUi
   layers:
   - Default
   - TransparentFX

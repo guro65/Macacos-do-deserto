@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int VidaAtual { get { return vidaAtual; } }
+    public int VidaMaxima { get { return vida; } }
     private int vidaAtual;
     [SerializeField] private int vida = 100;
     [SerializeField] private float ataque;
@@ -30,7 +32,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         vidaAtual = vida;
-        barraDeVida.AlteraBarraDeVida(vidaAtual,vida);
+        //barraDeVida.AlteraBarraDeVida(vidaAtual,vida);
     }
 
     void Update()
@@ -125,10 +127,13 @@ public class Player : MonoBehaviour
     public void ReceberDano(int dano)
     {
         int danoRecebido = defendendo ? dano / 2 : dano;
-        vida -= danoRecebido;
-        if (vidaAtual <= 0)
+        vidaAtual -= danoRecebido;
+        
+        // Atualiza a barra de vida ao receber dano
+        //barraDeVida.AtualizarBarraDeVida(vidaAtual, vida);
+
+        if (vidaAtual <= 0 && estaVivo)
         {
-            vidaAtual -= dano;
             estaVivo = false;
             animator.SetTrigger("Morrer");
         }

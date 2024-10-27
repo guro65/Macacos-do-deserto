@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BarraDeVida : MonoBehaviour
+public class BarraDeVida1 : MonoBehaviour
 {
     private Transform myCamera;
     [SerializeField] private Image barraDeVida;
