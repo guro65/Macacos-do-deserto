@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Npc : MonoBehaviour
 {
-<<<<<<< HEAD
-=======
 
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
     [Header("Configurações Principais")]
     [SerializeField] private GameObject player;
     [SerializeField] private float velocidade = 5f;
@@ -16,37 +13,31 @@ public class Npc : MonoBehaviour
     [SerializeField] private float tempoSeguir = 2f;
     [SerializeField] private bool estaSeguindo;
     [SerializeField] private bool estaAtacando;
-<<<<<<< HEAD
-=======
     //[SerializeField] private BarraDeVida barraDeVida;
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
 
     public int danoInimigo;
+    //private int vidaAtual;
     public int vida = 100;
     private Rigidbody rb;
     private Animator animator;
     private bool defendendo = false;
 
-    private ContagemDeNpc controleDeObjetivo;
+    private ContagemDeNpc controleDeObjetivo; // Referência ao controlador de objetivos
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
         estaSeguindo = false;
         estaAtacando = false;
         animator.SetBool("EstaParado", true);
-<<<<<<< HEAD
-=======
         animator.SetBool("Defesa", false);
         // Obtém a referência ao controlador de objetivos na cena
         controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
         // vidaAtual = vidaInimigo;
         // barraDeVida.AlteraBarraDeVida(vidaAtual,vidaInimigo);
 
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
     }
 
     public Npc(float tempoSeguir)
@@ -69,34 +60,41 @@ public class Npc : MonoBehaviour
 
         if (vida <= 0)
         {
-            animator.SetTrigger("Morrer");
+            vida = 0;  // Garante que a vida não fique negativa
+            //animator.SetTrigger("Morrer");
             estaSeguindo = false;
             estaAtacando = false;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
 
+            // Notifica o controlador de objetivos que este NPC foi derrotado
             if (controleDeObjetivo != null && gameObject.CompareTag("Inimigo"))
             {
                 controleDeObjetivo.NpcDerrotado();
+                Debug.Log("NPC derrotado e notificado ao controle de objetivos.");
             }
 
-<<<<<<< HEAD
-=======
             // Destrói o GameObject do NPC
             new WaitForSeconds(2);
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
             Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("NPC ainda tem vida: " + vida);
         }
     }
 
     private void SeguirPlayer()
     {
         Vector3 moveDirection = (player.transform.position - transform.position).normalized;
-        rb.velocity = moveDirection * velocidade;
 
+        // Move o inimigo na direção do player
+        rb.linearVelocity = moveDirection * velocidade;
+
+        // Verifica se está próximo o suficiente para parar de seguir
         if (Vector3.Distance(player.transform.position, transform.position) <= paraDeSeguirDistancia)
         {
             estaSeguindo = false;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             animator.SetBool("Andar", true);
             estaAtacando = false;
             return;
@@ -134,38 +132,23 @@ public class Npc : MonoBehaviour
     {
         while (estaAtacando)
         {
-<<<<<<< HEAD
-            int acao = Random.Range(0, 3);
-=======
             estaSeguindo = false;
             int acao = Random.Range(0, 2);
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
             animator.SetBool("Andar", false);
-            yield return new WaitForSeconds(1);
-
             switch (acao)
             {
                 case 0:
-<<<<<<< HEAD
-=======
                     new WaitForSeconds(1);
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
                     animator.SetTrigger("Ataque");
                     player.GetComponent<Player>().ReceberDano(danoInimigo);
                     break;
                 case 1:
-<<<<<<< HEAD
-=======
                     new WaitForSeconds(1);
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
                     animator.SetTrigger("Ataque2");
                     player.GetComponent<Player>().ReceberDano(danoInimigo * 2);
                     break;
                 case 2:
-<<<<<<< HEAD
-=======
                     new WaitForSeconds(1);
->>>>>>> 07b6ce3ac697fbe4ebc70305f271697b1d7ad61e
                     animator.SetTrigger("Defesa");
                     defendendo = true;
                     player.GetComponent<Player>().ReceberDano(danoInimigo / 2);
@@ -191,7 +174,7 @@ public class Npc : MonoBehaviour
     {
         StartCoroutine(ExecutarAcoesAleatorias());
     }
-    
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
