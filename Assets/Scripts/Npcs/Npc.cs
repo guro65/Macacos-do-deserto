@@ -162,12 +162,13 @@ public class Npc : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (other.CompareTag("Player"))
         {
             estaSeguindo = false;
-            animator.SetBool("Andar", false);
             StartCoroutine(ExecutarAcoesAleatorias());
         }
+
     }
 
     private void OnTriggerStay(Collider other)
