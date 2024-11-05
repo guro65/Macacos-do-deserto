@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        barraDeVida = FindObjectOfType<BarraDeVida>();
         temChave = false;
         pegando = false;
         podePegar = false;
@@ -128,9 +129,9 @@ public class Player : MonoBehaviour
     {
         int danoRecebido = defendendo ? dano / 2 : dano;
         vidaAtual -= danoRecebido;
-        
+
         // Atualiza a barra de vida ao receber dano
-        //barraDeVida.AtualizarBarraDeVida(vidaAtual, vida);
+        barraDeVida.AtualizarBarraDeVida(vidaAtual, vida);
 
         if (vidaAtual <= 0 && estaVivo)
         {
@@ -138,6 +139,8 @@ public class Player : MonoBehaviour
             animator.SetTrigger("Morrer");
         }
     }
+
+
 
     private void Atacar()
     {
@@ -184,17 +187,24 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Inimigo"))
+        if (collision.gameObject.CompareTag("Inimigo"))
         {
-            ReceberDano(collision.gameObject.GetComponent<Npc>().danoInimigo);
+            // Verifica se o inimigo possui um script com o dano definido
+            Npc inimigo = collision.gameObject.GetComponent<Npc>();
+            if (inimigo != null)
+            {
+                //ReceberDano(inimigo.danoInimigo);
+                //Debug.Log($"Player recebeu {inimigo.danoInimigo} de dano do inimigo.");
+            }
         }
 
-        if(collision.gameObject.CompareTag("Chao"))
+        if (collision.gameObject.CompareTag("Chao"))
         {
             estaPulando = false;
             animator.SetBool("EstaNoChao", true);
         }
     }
+
 
     private void OnTriggerEnter()
     {

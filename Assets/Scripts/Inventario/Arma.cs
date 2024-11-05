@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Arma", menuName = "Novo Item/ Arma")]
-public class Arma : Itens
+public class Machado2 : Itens
 {
     public int dano;
     public bool ehmagico;

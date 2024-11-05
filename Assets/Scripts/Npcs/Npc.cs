@@ -1,28 +1,22 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
 {
-
     [Header("Configurações Principais")]
     [SerializeField] private GameObject player;
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float paraDeSeguirDistancia = 3f;
     [SerializeField] private float tempoEntreAcoes = 2.5f;
-    [SerializeField] private float tempoSeguir = 2f;
     [SerializeField] private bool estaSeguindo;
     [SerializeField] private bool estaAtacando;
-    //[SerializeField] private BarraDeVida barraDeVida;
 
-    public int danoInimigo;
-    //private int vidaAtual;
+    public Machado arma; // Referência à arma do NPC
     public int vida = 100;
     private Rigidbody rb;
     private Animator animator;
     private bool defendendo = false;
-
-    private ContagemDeNpc controleDeObjetivo; // Referência ao controlador de objetivos
+    private ContagemDeNpc controleDeObjetivo;
 
     private void Start()
     {
@@ -33,17 +27,15 @@ public class Npc : MonoBehaviour
         estaAtacando = false;
         animator.SetBool("EstaParado", true);
         animator.SetBool("Defesa", false);
-        // Obtém a referência ao controlador de objetivos na cena
         controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
-        // vidaAtual = vidaInimigo;
-        // barraDeVida.AlteraBarraDeVida(vidaAtual,vidaInimigo);
 
+        
+        if (arma == null)
+        {
+            arma = GetComponentInChildren<Machado>(); // Tenta pegar a arma do filho
+        }
     }
 
-    public Npc(float tempoSeguir)
-    {
-        this.tempoSeguir = tempoSeguir;
-    }
     private void Update()
     {
         if (estaSeguindo)
@@ -60,22 +52,18 @@ public class Npc : MonoBehaviour
 
         if (vida <= 0)
         {
-            vida = 0;  // Garante que a vida não fique negativa
-            //animator.SetTrigger("Morrer");
+            vida = 0;
             estaSeguindo = false;
             estaAtacando = false;
-            rb.linearVelocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
 
-            // Notifica o controlador de objetivos que este NPC foi derrotado
             if (controleDeObjetivo != null && gameObject.CompareTag("Inimigo"))
             {
                 controleDeObjetivo.NpcDerrotado();
                 Debug.Log("NPC derrotado e notificado ao controle de objetivos.");
             }
 
-            // Destrói o GameObject do NPC
-            new WaitForSeconds(2);
-            Destroy(gameObject);
+            Destroy(gameObject, 2f);
         }
         else
         {
@@ -86,15 +74,12 @@ public class Npc : MonoBehaviour
     private void SeguirPlayer()
     {
         Vector3 moveDirection = (player.transform.position - transform.position).normalized;
+        rb.velocity = moveDirection * velocidade;
 
-        // Move o inimigo na direção do player
-        rb.linearVelocity = moveDirection * velocidade;
-
-        // Verifica se está próximo o suficiente para parar de seguir
         if (Vector3.Distance(player.transform.position, transform.position) <= paraDeSeguirDistancia)
         {
             estaSeguindo = false;
-            rb.linearVelocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             animator.SetBool("Andar", true);
             estaAtacando = false;
             return;
@@ -106,7 +91,6 @@ public class Npc : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             animator.SetBool("Andar", true);
             estaSeguindo = true;
-
         }
         else
         {
@@ -124,56 +108,37 @@ public class Npc : MonoBehaviour
     public void NaoEstaSeguindo()
     {
         estaSeguindo = false;
-        //animator.SetBool("EstaParado", true);
         animator.SetBool("Andar", false);
     }
 
-    private IEnumerator ExecutarAcoesAleatorias()
+    private IEnumerator ExecutarAtaque()
     {
         while (estaAtacando)
         {
-            estaSeguindo = false;
-            int acao = Random.Range(0, 2);
-            animator.SetBool("Andar", false);
-            switch (acao)
+            if (player == null) yield break; // Verifica se o player ainda existe
+            animator.SetTrigger("Ataque");
+            yield return new WaitForSeconds(1f); // Tempo da animação de ataque
+
+            // Causa dano ao player usando a arma
+            if (arma != null)
             {
-                case 0:
-                    new WaitForSeconds(1);
-                    animator.SetTrigger("Ataque");
-                    player.GetComponent<Player>().ReceberDano(danoInimigo);
-                    break;
-                case 1:
-                    new WaitForSeconds(1);
-                    animator.SetTrigger("Ataque2");
-                    player.GetComponent<Player>().ReceberDano(danoInimigo * 2);
-                    break;
-                case 2:
-                    new WaitForSeconds(1);
-                    animator.SetTrigger("Defesa");
-                    defendendo = true;
-                    player.GetComponent<Player>().ReceberDano(danoInimigo / 2);
-                    new WaitForSeconds(1);
-                    defendendo = false;
-                    break;
+                player.GetComponent<Player>().ReceberDano(arma.dano); // Chama o método para receber dano
             }
+
             yield return new WaitForSeconds(tempoEntreAcoes);
         }
     }
 
+
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.CompareTag("Player"))
         {
             estaSeguindo = false;
-            StartCoroutine(ExecutarAcoesAleatorias());
+            estaAtacando = true;
+            StartCoroutine(ExecutarAtaque());
         }
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        StartCoroutine(ExecutarAcoesAleatorias());
     }
 
     private void OnTriggerExit(Collider other)
@@ -181,7 +146,7 @@ public class Npc : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             estaAtacando = false;
-            StopCoroutine(ExecutarAcoesAleatorias());
+            StopCoroutine(ExecutarAtaque());
             estaSeguindo = true;
             animator.SetBool("Andar", true);
         }
