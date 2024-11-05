@@ -60,10 +60,10 @@ public class BarraDeVida : MonoBehaviour
         botaoReiniciar.onClick.AddListener(ReiniciarJogo); // Adiciona um listener ao botão
     }
 
-    // Reinicia o jogo (você pode adicionar a lógica que desejar aqui)
+    
     public void ReiniciarJogo()
     {
-        // Lógica para reiniciar o jogo, por exemplo:
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("Jogo reiniciado!"); // Para fins de depuração
     }

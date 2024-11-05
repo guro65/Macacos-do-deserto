@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
@@ -10,6 +11,7 @@ public class Npc : MonoBehaviour
     [SerializeField] private float tempoEntreAcoes = 2.5f;
     [SerializeField] private bool estaSeguindo;
     [SerializeField] private bool estaAtacando;
+    [SerializeField] private AudioClip morte;
 
     public Machado arma; // Referência à arma do NPC
     public int vida = 100;
@@ -17,6 +19,8 @@ public class Npc : MonoBehaviour
     private Animator animator;
     private bool defendendo = false;
     private ContagemDeNpc controleDeObjetivo;
+    private AudioSource audio;
+
 
     private void Start()
     {
@@ -28,8 +32,9 @@ public class Npc : MonoBehaviour
         animator.SetBool("EstaParado", true);
         animator.SetBool("Defesa", false);
         controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
+        audio = GetComponent<AudioSource>();
 
-        
+
         if (arma == null)
         {
             arma = GetComponentInChildren<Machado>(); // Tenta pegar a arma do filho
@@ -55,7 +60,7 @@ public class Npc : MonoBehaviour
             vida = 0;
             estaSeguindo = false;
             estaAtacando = false;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
 
             if (controleDeObjetivo != null && gameObject.CompareTag("Inimigo"))
             {
@@ -64,6 +69,8 @@ public class Npc : MonoBehaviour
             }
 
             Destroy(gameObject, 2f);
+            //audio.PlayOneShot(morte);
+
         }
         else
         {
@@ -74,12 +81,12 @@ public class Npc : MonoBehaviour
     private void SeguirPlayer()
     {
         Vector3 moveDirection = (player.transform.position - transform.position).normalized;
-        rb.velocity = moveDirection * velocidade;
+        rb.linearVelocity = moveDirection * velocidade;
 
         if (Vector3.Distance(player.transform.position, transform.position) <= paraDeSeguirDistancia)
         {
             estaSeguindo = false;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             animator.SetBool("Andar", true);
             estaAtacando = false;
             return;
@@ -150,5 +157,10 @@ public class Npc : MonoBehaviour
             estaSeguindo = true;
             animator.SetBool("Andar", true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        player.GetComponent<Player>().SomarKill();
     }
 }

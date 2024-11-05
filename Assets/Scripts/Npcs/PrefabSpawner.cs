@@ -7,7 +7,6 @@ public class PrefabSpawner : MonoBehaviour
     public GameObject prefabInimigo; // Prefab do inimigo a ser gerado
     public int quantidadeParaGerar = 10; // Quantidade de prefabs a ser gerada
     public float intervaloDeGeracao = 1.0f; // Tempo em segundos entre cada geração
-
     private int inimigosGerados = 0;
 
     void Start()

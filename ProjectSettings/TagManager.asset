@@ -14,6 +14,8 @@ TagManager:
   - Arma
   - Inimigo
   - MorteUi
+  - StatusVida
+  - statusVelocidade
   layers:
   - Default
   - TransparentFX

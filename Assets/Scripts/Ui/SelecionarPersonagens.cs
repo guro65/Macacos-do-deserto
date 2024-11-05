@@ -7,12 +7,14 @@ public class SelecionarPersonagens : MonoBehaviour
 {
     public string nome;
     public int dano;
-    public int defesa;
+    public int velocidade;
+    public int vida;
     public bool selecionado;
     public GameObject prefabPersonagem;
-    [SerializeField] private TextMeshProUGUI statusDefesa;
+    [SerializeField] private TextMeshProUGUI statusVelocidade;
     [SerializeField] private TextMeshProUGUI statusDano;
     [SerializeField] private TextMeshProUGUI statusNome;
+    [SerializeField] private TextMeshProUGUI statusVida;
     public string cenaDestino;
     public Transform pontoDeSpawn;
     private static GameObject personagemSelecionado;
@@ -20,17 +22,19 @@ public class SelecionarPersonagens : MonoBehaviour
 
     private void Start()
     {
-        statusDefesa = GameObject.FindWithTag("StatusDefesa").GetComponent<TextMeshProUGUI>();
+        statusVelocidade = GameObject.FindWithTag("statusVelocidade").GetComponent<TextMeshProUGUI>();
         statusDano = GameObject.FindWithTag("StatusDano").GetComponent<TextMeshProUGUI>();
         statusNome = GameObject.FindWithTag("StatusNome").GetComponent<TextMeshProUGUI>();
+        statusVida = GameObject.FindWithTag("StatusVida").GetComponent<TextMeshProUGUI>();
     }
 
     private void OnMouseEnter()
     {
         transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-        statusDefesa.text = "Defesa: " + defesa;
+        statusVelocidade.text = "Velocidade: " + velocidade;
         statusDano.text = "Dano: " + dano;
         statusNome.text = "Nome: " + nome;
+        statusVida.text = "Vida: " + vida;
     }
 
     private void OnMouseExit()
@@ -38,9 +42,10 @@ public class SelecionarPersonagens : MonoBehaviour
         if (!selecionado)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
-            statusDefesa.text = "";
+            statusVelocidade.text = "";
             statusDano.text = "";
             statusNome.text = "";
+            statusVida.text = "";
         }
     }
 

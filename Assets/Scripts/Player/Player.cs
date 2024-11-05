@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public int VidaAtual { get { return vidaAtual; } }
     public int VidaMaxima { get { return vida; } }
-    private int vidaAtual;
+    [SerializeField] private int vidaAtual;
     [SerializeField] private int vida = 100;
     [SerializeField] private float ataque;
     [SerializeField] private float velocidade;
@@ -18,10 +19,16 @@ public class Player : MonoBehaviour
     [SerializeField] private bool estaVivo = true;
     [SerializeField] private List<GameObject> inventario = new List<GameObject>();
     [SerializeField] private BarraDeVida barraDeVida;
+    [SerializeField] private AudioClip pulo;
+    [SerializeField] private AudioClip queda;
+    [SerializeField] private AudioClip corte;
+    private int kill;
     private Rigidbody rb;
     private bool estaPulando;
     private Vector3 angleRotation;
     private bool defendendo = false;
+    private Diretor diretor;
+    private AudioSource audio;
 
     void Start()
     {
@@ -33,6 +40,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         vidaAtual = vida;
+        diretor = FindObjectOfType<Diretor>();
+        audio = GetComponent<AudioSource>();
         //barraDeVida.AlteraBarraDeVida(vidaAtual,vida);
     }
 
@@ -80,6 +89,7 @@ public class Player : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0))
         {
+            audio.PlayOneShot(corte);
             animator.SetTrigger("Ataque");
             Atacar();
         }
@@ -174,8 +184,10 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * forcaPulo, ForceMode.Impulse);
+        audio.PlayOneShot(pulo);
         estaPulando = true;
         animator.SetBool("EstaNoChao", false);
+        
     }
 
     private void TurnAround()
@@ -200,6 +212,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Chao"))
         {
+            audio.PlayOneShot(queda);
             estaPulando = false;
             animator.SetBool("EstaNoChao", true);
         }
@@ -292,5 +305,15 @@ public class Player : MonoBehaviour
             }
             bauTesouro.RemoverConteudoBau();
         }
+    }
+
+    public int ContagemDeKill()
+    {
+        return kill;
+    }
+
+    public void SomarKill()
+    {
+        kill++;
     }
 }
