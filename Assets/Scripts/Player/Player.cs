@@ -47,25 +47,25 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && podePegar)
+        if (Input.GetKeyDown(KeyCode.E) && podePegar)
         {
             animator.SetTrigger("Pegando");
             pegando = true;
         }
 
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             animator.SetBool("Andar", true);
             animator.SetBool("AndarParaTras", false);
             Walk();
         }
-        else if(Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             animator.SetBool("AndarParaTras", true);
             animator.SetBool("Andar", false);
             Walk();
         }
-        else if(Input.GetKeyDown(KeyCode.A) || Input.GetKey(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             animator.SetBool("Andar", true);
         }
@@ -75,36 +75,36 @@ public class Player : MonoBehaviour
             animator.SetBool("AndarParaTras", false);
         }
 
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
         {
             animator.SetBool("Andar", false);
             animator.SetBool("AndarParaTras", false);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && !estaPulando)
+        if (Input.GetKeyDown(KeyCode.Space) && !estaPulando)
         {
             animator.SetTrigger("Pular");
             Jump();
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             audio.PlayOneShot(corte);
             animator.SetTrigger("Ataque");
             Atacar();
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             animator.SetTrigger("Ataque2");
         }
 
-        if(Input.GetMouseButtonDown(0) && Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetMouseButtonDown(0) && Input.GetKeyDown(KeyCode.LeftControl))
         {
             animator.SetTrigger("Ataque3");
         }
 
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
         {
             animator.SetBool("Correndo", true);
             Walk(8);
@@ -114,23 +114,23 @@ public class Player : MonoBehaviour
             animator.SetBool("Correndo", false);
         }
 
-        if(!estaVivo)
+        if (!estaVivo)
         {
             animator.SetTrigger("EstaVivo");
             estaVivo = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             animator.SetTrigger("Defesa");
-           // defendendo = true;
+            // defendendo = true;
         }
-        else if(Input.GetKeyUp(KeyCode.Q))
+        else if (Input.GetKeyUp(KeyCode.Q))
         {
             //defendendo = false;
         }
 
-      
+
 
         TurnAround();
     }
@@ -149,6 +149,14 @@ public class Player : MonoBehaviour
             animator.SetTrigger("Morrer");
         }
     }
+
+    public void AumentarVida(int valor)
+    {
+        vida += valor;  // Aumenta a vida máxima
+        vidaAtual = Mathf.Min(vidaAtual + valor, vida);  // Aumenta a vida atual, limitada ao novo valor de vida máxima
+        barraDeVida.AtualizarBarraDeVida(vidaAtual, vida);  // Atualiza a barra de vida
+    }
+
 
 
 
@@ -171,7 +179,7 @@ public class Player : MonoBehaviour
 
     private void Walk(float velo = 1)
     {
-        if((velo == 1))
+        if ((velo == 1))
         {
             velo = velocidade;
         }
@@ -187,7 +195,7 @@ public class Player : MonoBehaviour
         audio.PlayOneShot(pulo);
         estaPulando = true;
         animator.SetBool("EstaNoChao", false);
-        
+
     }
 
     private void TurnAround()
@@ -228,7 +236,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log(other.gameObject.tag);
 
-        if(other.gameObject.CompareTag("Chave") && pegando)
+        if (other.gameObject.CompareTag("Chave") && pegando)
         {
             inventario.Add(Instantiate(other.gameObject.GetComponent<ChaveAntiga>().CopiaDaChave()));
             int numero = other.gameObject.GetComponent<ChaveAntiga>().PegarNumeroChave();
@@ -238,15 +246,15 @@ public class Player : MonoBehaviour
             podePegar = false;
         }
 
-        if(other.gameObject.CompareTag("Porta") && pegando && temChave)
+        if (other.gameObject.CompareTag("Porta") && pegando && temChave)
         {
             other.gameObject.GetComponent<Animator>().SetTrigger("Abrir");
             temChave = true;
         }
 
-        if(other.gameObject.CompareTag("Bau") && pegando)
+        if (other.gameObject.CompareTag("Bau") && pegando)
         {
-            if(VerificaChave(other.gameObject.GetComponent<Bau>().PegarNumeroFechadura()))
+            if (VerificaChave(other.gameObject.GetComponent<Bau>().PegarNumeroFechadura()))
             {
                 other.gameObject.GetComponent<Animator>().SetTrigger("AbrirBau");
             }
@@ -256,7 +264,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(other.gameObject.CompareTag("Inimigo"))
+        if (other.gameObject.CompareTag("Inimigo"))
         {
             other.gameObject.GetComponent<Npc>().EstaSeguindo();
         }
@@ -264,7 +272,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.CompareTag("Inimigo"))
+        if (other.gameObject.CompareTag("Inimigo"))
         {
             other.gameObject.GetComponent<Npc>().NaoEstaSeguindo();
         }
@@ -278,11 +286,11 @@ public class Player : MonoBehaviour
 
     private bool VerificaChave(int chave)
     {
-        foreach(GameObject item in inventario)
+        foreach (GameObject item in inventario)
         {
-            if(item.gameObject.CompareTag("Chave"))
+            if (item.gameObject.CompareTag("Chave"))
             {
-                if(item.gameObject.GetComponent<ChaveAntiga>().PegarNumeroChave() == chave)
+                if (item.gameObject.GetComponent<ChaveAntiga>().PegarNumeroChave() == chave)
                 {
                     return true;
                 }
@@ -297,9 +305,9 @@ public class Player : MonoBehaviour
 
         ouro += bauTesouro.PegarOuro();
 
-        if(bauTesouro.AcessarConteudoBau() != null)
+        if (bauTesouro.AcessarConteudoBau() != null)
         {
-            foreach(GameObject item in bauTesouro.AcessarConteudoBau())
+            foreach (GameObject item in bauTesouro.AcessarConteudoBau())
             {
                 inventario.Add(item);
             }

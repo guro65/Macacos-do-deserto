@@ -24941,8 +24941,16 @@ MonoBehaviour:
   estaSeguindo: 0
   estaAtacando: 0
   morte: {fileID: 0}
+  pocaoPequenaPrefab: {fileID: 0}
+  pocaoMediaPrefab: {fileID: 0}
+  pocaoGrandePrefab: {fileID: 0}
+  chancePocaoPequena: 0.5
+  chancePocaoMedia: 0.3
+  chancePocaoGrande: 0.2
+  npcNome: Boss
   arma: {fileID: 0}
-  vida: 100
+  vida: 350
+  painelMorte: {fileID: 0}
 --- !u!54 &3656568991283884039
 Rigidbody:
   m_ObjectHideFlags: 0

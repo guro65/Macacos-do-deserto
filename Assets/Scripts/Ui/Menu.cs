@@ -9,6 +9,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("SelecaoDePersonagem");
     }
 
+    public void Voltar()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void Sair() 
     {
         Application.Quit();

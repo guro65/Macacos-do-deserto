@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
@@ -13,14 +12,24 @@ public class Npc : MonoBehaviour
     [SerializeField] private bool estaAtacando;
     [SerializeField] private AudioClip morte;
 
-    public Machado arma; // Referência à arma do NPC
+    [Header("Drop de Poções")]
+    [SerializeField] private GameObject pocaoPequenaPrefab;
+    [SerializeField] private GameObject pocaoMediaPrefab;
+    [SerializeField] private GameObject pocaoGrandePrefab;
+    [SerializeField] private float chancePocaoPequena = 0.5f;  // 50% de chance de dropar
+    [SerializeField] private float chancePocaoMedia = 0.3f;    // 30% de chance de dropar
+    [SerializeField] private float chancePocaoGrande = 0.2f;   // 20% de chance de dropar
+
+    [Header("Nome do NPC")]
+    [SerializeField] private string npcNome;  // Nome do NPC
+
+    public Machado arma;
     public int vida = 100;
     private Rigidbody rb;
     private Animator animator;
     private bool defendendo = false;
-    private ContagemDeNpc controleDeObjetivo;
     private AudioSource audio;
-
+    public GameObject painelMorte; // O painel de Game Over que aparece quando o Boss morre
 
     private void Start()
     {
@@ -31,13 +40,16 @@ public class Npc : MonoBehaviour
         estaAtacando = false;
         animator.SetBool("EstaParado", true);
         animator.SetBool("Defesa", false);
-        controleDeObjetivo = FindObjectOfType<ContagemDeNpc>();
         audio = GetComponent<AudioSource>();
-
 
         if (arma == null)
         {
-            arma = GetComponentInChildren<Machado>(); // Tenta pegar a arma do filho
+            arma = GetComponentInChildren<Machado>();
+        }
+
+        if (painelMorte != null)
+        {
+            painelMorte.SetActive(false); // Garante que o painel de morte esteja escondido no início
         }
     }
 
@@ -62,19 +74,40 @@ public class Npc : MonoBehaviour
             estaAtacando = false;
             rb.linearVelocity = Vector3.zero;
 
-            if (controleDeObjetivo != null && gameObject.CompareTag("Inimigo"))
+            if (npcNome == "Boss" && painelMorte != null)
             {
-                controleDeObjetivo.NpcDerrotado();
-                Debug.Log("NPC derrotado e notificado ao controle de objetivos.");
+                // Pausa o jogo quando o Boss morrer
+                Time.timeScale = 0f;
+                painelMorte.SetActive(true);  // Exibe o painel quando o Boss morrer
             }
 
+            DropPocao();
             Destroy(gameObject, 2f);
-            //audio.PlayOneShot(morte);
-
         }
         else
         {
             Debug.Log("NPC ainda tem vida: " + vida);
+        }
+    }
+
+    private void DropPocao()
+    {
+        float randomValue = Random.value;
+
+        if (randomValue <= chancePocaoGrande)
+        {
+            Instantiate(pocaoGrandePrefab, transform.position, Quaternion.identity);
+            Debug.Log("Poção Grande dropada!");
+        }
+        else if (randomValue <= chancePocaoMedia + chancePocaoGrande)
+        {
+            Instantiate(pocaoMediaPrefab, transform.position, Quaternion.identity);
+            Debug.Log("Poção Média dropada!");
+        }
+        else if (randomValue <= chancePocaoPequena + chancePocaoMedia + chancePocaoGrande)
+        {
+            Instantiate(pocaoPequenaPrefab, transform.position, Quaternion.identity);
+            Debug.Log("Poção Pequena dropada!");
         }
     }
 
@@ -122,21 +155,18 @@ public class Npc : MonoBehaviour
     {
         while (estaAtacando)
         {
-            if (player == null) yield break; // Verifica se o player ainda existe
+            if (player == null) yield break;
             animator.SetTrigger("Ataque");
-            yield return new WaitForSeconds(1f); // Tempo da animação de ataque
+            yield return new WaitForSeconds(1f);
 
-            // Causa dano ao player usando a arma
             if (arma != null)
             {
-                player.GetComponent<Player>().ReceberDano(arma.dano); // Chama o método para receber dano
+                player.GetComponent<Player>().ReceberDano(arma.dano);
             }
 
             yield return new WaitForSeconds(tempoEntreAcoes);
         }
     }
-
-
 
     private void OnTriggerEnter(Collider other)
     {

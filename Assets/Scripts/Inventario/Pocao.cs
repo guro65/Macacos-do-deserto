@@ -1,41 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Pocao", menuName = "Novo Item/ Pocao")]
-public class Pocao : Itens
+public class Pocao : MonoBehaviour
 {
-    public TipoPocao tipo;
-    public enum TipoPocao{cura, magia, defesa, poder}
-    public int tamanho;
+    [SerializeField] private int vidaParaAumentar = 20;  // Quantidade que a vida máxima e vida atual irão aumentar
 
-    public override string Nome()
+    private bool jogadorNoRange = false;  // Verifica se o player está no alcance da poção
+
+    private void Update()
     {
-        return nome;
+        if (jogadorNoRange && Input.GetKeyDown(KeyCode.E))
+        {
+            Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            if (player != null)
+            {
+                player.AumentarVida(vidaParaAumentar);  // Chama a função para aumentar a vida e a vida máxima
+                Destroy(gameObject);  // Destrói a poção após ser usada
+            }
+        }
     }
 
-    public override string Descricao()
+    private void OnTriggerEnter(Collider other)
     {
-        return descricao;
+        if (other.CompareTag("Player"))
+        {
+            jogadorNoRange = true;
+        }
     }
 
-    public override Sprite Sprite()
+    private void OnTriggerExit(Collider other)
     {
-        return sprite;
-    }
-
-    public override GameObject ItemPrefab()
-    {
-        return itemPrefab;
-    }
-
-    public string TipoDePocao()
-    {
-        return tipo.ToString();
-    }
-
-    public int Tamanho()
-    {
-        return tamanho;
+        if (other.CompareTag("Player"))
+        {
+            jogadorNoRange = false;
+        }
     }
 }

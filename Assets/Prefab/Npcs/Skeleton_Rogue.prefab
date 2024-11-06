@@ -1674,8 +1674,19 @@ MonoBehaviour:
   estaSeguindo: 0
   estaAtacando: 0
   morte: {fileID: 8300000, guid: 46e4af9d101739e438f45dc9500664aa, type: 3}
+  pocaoPequenaPrefab: {fileID: 4855436553324749501, guid: cd68b22a3c3bc424497e5c0ce4356eba,
+    type: 3}
+  pocaoMediaPrefab: {fileID: 8869309997526797616, guid: a920201fc9f665c4983a341b866e3324,
+    type: 3}
+  pocaoGrandePrefab: {fileID: 4098963674080326957, guid: ed3671345c623a042a74376bc5287da6,
+    type: 3}
+  chancePocaoPequena: 0.05
+  chancePocaoMedia: 0.003
+  chancePocaoGrande: 0.002
+  npcNome: Servo
   arma: {fileID: 0}
   vida: 135
+  painelMorte: {fileID: 0}
 --- !u!136 &9011149217048188714
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1790,8 +1801,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 22.00023, y: 0.2371792, z: 12.879271}
-  m_Center: {x: 0.8331599, y: 0.098926194, z: 0.76228094}
+  m_Size: {x: 58.864273, y: 0.2371792, z: 51.36848}
+  m_Center: {x: 4.2237134, y: 0.098926194, z: 8.659101}
 --- !u!1 &4470316776447432025
 GameObject:
   m_ObjectHideFlags: 0
